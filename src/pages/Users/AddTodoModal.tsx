@@ -3,6 +3,7 @@ import type { User } from "../../types";
 import { request } from "../../api";
 import Modal from "../../components/Modal";
 import { UI } from "./ui";
+import { addLocalTodo } from "../../todosLocal";
 
 export function AddTodoModal({
   token,
@@ -22,18 +23,24 @@ export function AddTodoModal({
     setErr("");
     setOk("");
 
-    if (!todo.trim()) {
+    const trimmed = todo.trim();
+    if (!trimmed) {
       setErr("Todo is required");
       return;
     }
 
     setLoading(true);
     try {
+      // Call API (mock). Even if it doesn't persist, we still save locally.
       await request("/todos/add", {
         method: "POST",
         token,
-        body: { todo: todo.trim(), completed: false, userId: user.id },
+        body: { todo: trimmed, completed: false, userId: user.id },
       });
+
+      // Save locally so it stays until logout
+      addLocalTodo(user.id, trimmed);
+
       setOk("Todo added");
       setTodo("");
     } catch (e: any) {

@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Users from "./pages/Users/UsersPage";
 import { getStoredAuth, clearStoredAuth } from "./api";
 import type { Auth } from "./types";
+import { clearLocalTodos } from "./todosLocal";
 
 export default function App() {
   const [auth, setAuth] = useState<Auth | null>(null);
@@ -16,6 +17,7 @@ export default function App() {
   // logout
   const onLogout = () => {
     clearStoredAuth();
+    clearLocalTodos(); // clears local todos when logout
     setAuth(null);
   };
 
