@@ -13,14 +13,6 @@ export type User = {
   username: string;
 };
 
-
-export type Todo = {
-  id: number;
-  todo: string;
-  completed: boolean;
-  userId: number;
-};
-
 export type UsersResponse = {
   users: User[];
   total: number;

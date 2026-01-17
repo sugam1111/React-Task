@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import type { Todo, TodosResponse, User } from "../../types";
 import { request } from "../../api";
 import Modal from "../../components/Modal";
-import { UI } from "./ui";
 import { getLocalTodos } from "../../todosLocal";
 
 export function ViewTodosModal({
@@ -27,23 +26,16 @@ export function ViewTodosModal({
 
       try {
         const local = getLocalTodos(user.id);
-
-        // Try API todos too (if API fails, we still show local)
         const data = await request<TodosResponse>(`/todos/user/${user.id}`, { token });
-
         if (cancelled) return;
 
         const apiTodos = data.todos || [];
-
-        // Merge: local first (newest), then API
         setTodos([...(local || []), ...apiTodos]);
       } catch (e: any) {
         if (cancelled) return;
 
-        // If API fails, still show local todos
         const local = getLocalTodos(user.id);
         setTodos([...(local || [])]);
-
         setErr(e?.message || "Failed to load todos");
       } finally {
         if (!cancelled) setLoading(false);
@@ -96,12 +88,6 @@ export function ViewTodosModal({
           ))}
         </ul>
       ) : null}
-
-      <div className="flex justify-end mt-4">
-        <button className={UI.btnSecondary} onClick={onClose} type="button">
-          Close
-        </button>
-      </div>
     </Modal>
   );
 }

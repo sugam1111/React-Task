@@ -83,15 +83,10 @@ export default function Login({ onLoggedIn }: Props) {
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <div className="text-xs text-slate-500">
-            Test: <span className="font-medium text-slate-700">emilys</span> /{" "}
-            <span className="font-medium text-slate-700">emilyspass</span>
-          </div>
+          
         </form>
 
-        <div className="mt-4 text-center text-xs text-slate-500">
-          API: <span className="font-medium text-slate-700">dummyjson.com</span>
-        </div>
+        
       </div>
     </div>
   );
