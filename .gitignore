@@ -13,9 +13,7 @@ dist
 dist-ssr
 .vite
 
-# Environment variables
-.env
-.env.*
+
 
 # Local files
 *.local
